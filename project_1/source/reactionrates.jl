@@ -1,4 +1,3 @@
-include("constants.jl")
 
 k = 1e-6/NA # constant to convert from cm^3 to m^3 and divide by NA (Avogadros constant)
 
@@ -28,9 +27,10 @@ function λ34(T9)
     return returnvalue*k
 end
 
-function λe7(T9)
+function λe7(T9, ρ)
     if T9 < 1e-3 # include upper limit of 7Be electron capture
-        returnvalue = 1.57e-7
+        ne = get_number_density(ρ)["e"]
+        returnvalue = 1.57e-7/ne
     else
         returnvalue =  1.34e-10*T9^(-1/2)*(1 - 0.537*T9^(1/3) + 3.86*T9^(2/3) +
                        0.0027*T9^(-1)*exp(2.515*10^-3*T9^-1))
@@ -58,8 +58,9 @@ function λ17(T9)
 end
 
 function λp14(T9)
-    returnvalue = 4.90e7*T9^(-2/3)*exp(-15.228*T9^(-1/3) - 0.92*T9^2)
-               * (1 + 0.027*T9^(1/3) - 0.778*T9^(2/3) - 0.149*T9 + 0.261*T9^(4/3) + 0.127*T9^(5/3))
+    returnvalue = 4.90e7*T9^(-2/3)*exp(-15.228*T9^(-1/3) - 0.092*T9^2)
+               *(1 + 0.027*T9^(1/3) - 0.778*T9^(2/3) - 0.149*T9
+               + 0.261*T9^(4/3) + 0.127*T9^(5/3))
                + 2.37e3*T9^(-3/2)*exp(-3.011*T9^(-1))
                + 2.19e4*exp(-12.53*T9^(-1))
 
