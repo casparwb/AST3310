@@ -1,0 +1,6 @@
+has_rho = 1
+has_u = 1
+has_w = 1
+has_e = 1
+has_P = 1
+has_T = 1
